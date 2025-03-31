@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useStyles } from "./styles"
 import FileBase from './FileBase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 //calling from action posts for the creatingpost function
 import { createPost, updatePost} from "../../actions/posts";
-import { useSelector } from 'react-redux';
-
 import { TextField, Button, Typography, Paper } from "@mui/material";
 
 const Form = ({ currentId, setCurrentId }) => {
     const [postData, setPostData] = useState({
         creator: "", title: "", message: "", tags: "", selectedFile: ""
     });
+    // getting only the data for the updation from the redux reducer as one singular thing
     const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -31,9 +30,11 @@ const Form = ({ currentId, setCurrentId }) => {
         } else {
             dispatch(createPost(postData));
         }
+        Clear();
     };
 
     const Clear = () => {
+        setCurrentId(null);
         setPostData({
             creator: "",
             title: "",
@@ -49,7 +50,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <Paper className={classes.paper}>
             <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant='h6'>
-                    Creating a Memory
+                    { currentId ? "Editing" : "Creating"} a Memory
                 </Typography>
                 <TextField
                     name='creator'
