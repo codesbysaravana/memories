@@ -45,5 +45,21 @@ export const updatePost = async (req, res) => {
         //waits till post is updated
     const updatedPost = await PostMessage.findByIdAndUpdate(_id, { ...post, _id}, {new: true});
 
+    //{new: true} for returning the new updated and not old one 
+    //Without { new: true }, findByIdAndUpdate would return the old version of the document before the update.
+
     res.json(updatedPost);
+}
+
+export const deletepost = async (req, res) => {
+    const { id: _id } = req.params;
+
+    const post = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No post with such Id");
+
+
+    const deletedPost = await PostMessage.findByIdAndDelete(_id);
+
+    res.json(deletedPost);
 }
