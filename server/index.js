@@ -19,11 +19,8 @@ app.use(cors());
 
 app.use("/posts", postRoutes);
 
-const PORT = process.env.PORT || 5000;
-
-const CONNECTION_URL = "mongodb+srv://postMessages:postMessages@cluster.xprt6.mongodb.net/memories_messages_data?retryWrites=true&w=majority&appName=Cluster";
-
-
+const PORT = process.env.PORT;
+const CONNECTION_URL = process.env.CONNECTION_URL;
 const startServer = async () => {
     try {
         await mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true });
