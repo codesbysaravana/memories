@@ -4,14 +4,17 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 //dayjs and moment for handling dates and times
-import dayjs from "dayjs";
+//import dayjs from "dayjs";
 import moment from "moment"
-import relativeTime from "dayjs/plugin/relativeTime";
+//import relativeTime from "dayjs/plugin/relativeTime";
+import { useDispatch } from 'react-redux';
+import { deletePost, likePost } from "../../../actions/posts.js";
 
 import { useStyles } from "./styles.js";
 
 const Post = ({ post, setCurrentId }) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
   return (
     <Card className={classes.card}>
@@ -43,12 +46,12 @@ const Post = ({ post, setCurrentId }) => {
       </CardContent>
 
       <CardActions className={classes.cardActions}>
-        <Button size="small" color='primary' onClick={() => {}}>
+        <Button size="small" color='primary' onClick={() => {dispatch(likePost(post._id))}}>
           <ThumbUpAltIcon fontSize="small" />
             Like
             {post.likeCount}
         </Button>
-        <Button size="small" color='primary' onClick={() => {}}>
+        <Button size="small" color='primary' onClick={() => {dispatch(deletePost(post._id))}}>
           <DeleteIcon fontSize="small" />
             Delete
         </Button>
