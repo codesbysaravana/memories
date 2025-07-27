@@ -1,0 +1,22 @@
+name: Node.js Application Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Build application
+        run: npm run build
+      - name: Run tests (if applicable)
+        if: ${{ always() && !status().success }}
+        run: npm test
+      - name: Deployment step goes here
+        run: echo "Deployment step goes here"
